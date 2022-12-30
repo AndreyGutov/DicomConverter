@@ -51,21 +51,25 @@ while True:
 
 		tree.findall('data-set/element[@name="PatientName"]')[0].text = PatientNameTrans
 
-		BodyPE=tree.findall('data-set/element[@name="BodyPartExamined"]')[0].text
-		if BodyPE:
-			BodyPETrans=transliterate.transliterate(BodyPE)
-		else:
-			BodyPETrans="BodyErr"
+		try:
+			BodyPE=tree.findall('data-set/element[@name="BodyPartExamined"]')[0].text
+			if BodyPE:
+				BodyPETrans=transliterate.transliterate(BodyPE)
+			else:
+				BodyPETrans="BodyErr"
 
-		tree.findall('data-set/element[@name="BodyPartExamined"]')[0].text = BodyPETrans
+			tree.findall('data-set/element[@name="BodyPartExamined"]')[0].text = BodyPETrans
+		except:
+			pass
 
 		try:
 			ViewPos=tree.findall('data-set/element[@name="ViewPosition"]')[0].text
 			ViewPosTrans=transliterate.transliterate(ViewPos)
+			tree.findall('data-set/element[@name="ViewPosition"]')[0].text = ViewPosTrans
 		except:
-			ViewPosTrans="ViewErr"
+			pass
 
-		tree.findall('data-set/element[@name="ViewPosition"]')[0].text = ViewPosTrans
+		#tree.findall('data-set/element[@name="ViewPosition"]')[0].text = ViewPosTrans
 
 		tree.write(fullpathxml)
 
