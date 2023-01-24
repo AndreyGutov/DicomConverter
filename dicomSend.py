@@ -22,7 +22,7 @@ while True:
 	filePath=lineFileList.strip()
 	fileName=filePath.split('/')[-1]
 
-	cursor = connector.cnx.cursor()
+	cursor = connector.cnx.cursor(buffered=True)
 	select_query = (f"select * from DicomSend where FileName=%s")
 	cursor.execute(select_query,[fileName])
 	row = cursor.fetchone()
@@ -83,7 +83,7 @@ while True:
 				line = line.strip()
 		line=line.split(':')[0]
 		if line=='W':
-			cursor = connector.cnx.cursor()
+			cursor = connector.cnx.cursor(buffered=True)
 			insert_query=(f"INSERT INTO DicomSend (id, FileName, SendDate, PatientName) values(NULL, %s, NULL, %s)")
 			cursor.execute(insert_query,[fileName, PatientNameTrans])
 			connector.cnx.commit()
